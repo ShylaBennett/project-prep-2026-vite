@@ -5,6 +5,7 @@ import './App.scss'
 import Table from './components/TableComponents/Table/Table.jsx';
 import CategoryAddForm from './components/FormComponents/AddForm/CategoryAddForm.jsx';
 import CategoryEditForm from './components/FormComponents/EditForm/CategoryEditForm.jsx';
+import ItemAddForm from './components/FormComponents/AddForm/ItemAddForm.jsx';
 
 const App = props => {
 
@@ -204,9 +205,9 @@ const App = props => {
 <div className='items'>
   {
         editingItems ? (
-          <CategoryEditForm onUpdateEntry={ _updateItems } entry={ selectedItem } />
+          <ItemEditForm onUpdateEntry={ _updateItems } entry={ selectedItem } categories={ categories } />
         ) : (
-          <CategoryAddForm onAddEntry={ _addItems } />
+          <ItemAddForm onAddEntry={ _addItems } categories={ categories } />
         )
       }
       
