@@ -4,7 +4,7 @@ const conn = require('../connection.cjs')
 module.exports = {
     // GET: return all entries from the table.
     index(request, response) {
-        const sql = `SELECT * FROM categories`
+        const sql = `SELECT id, name FROM categories`
         conn.query(sql, (error, results) => {
             // If DB query fails, send generic server error.
             if (error) return response.sendStatus(500)
@@ -14,7 +14,7 @@ module.exports = {
     },
     // POST: insert a new entry, then return the full updated list.
     store(request, response) {
-        const sql = `INSERT INTO categories (category) VALUES (?)`
+        const sql = `INSERT INTO categories (name) VALUES (?)`
         // Placeholder values come from the request body.
         const values = [request.body.item.category_name]
         conn.query(sql, values, (error, results) => {
@@ -22,7 +22,7 @@ module.exports = {
             if (error) return response.sendStatus(500)
 
             // After insert, fetch and return all entries so frontend state stays in sync.
-            const sql = `SELECT * FROM categories`
+            const sql = `SELECT id, name FROM categories`
             conn.query(sql, (error, results) => {
                 if (error) return response.sendStatus(500)
                 return response.send( { entries: results })
@@ -31,14 +31,14 @@ module.exports = {
     },
     // PATCH: update an existing entry by id, then return full updated list.
     update(request, response){
-        const sql = `UPDATE categories SET category=? WHERE id=?`
+        const sql = `UPDATE categories SET name=? WHERE id=?`
         const values = [request.body.item.category_name, request.body.item.id]
         conn.query(sql, values, (error, results) => {
             console.log(`results: ${ JSON.stringify(results) }`)
             if (error) return response.sendStatus(500)
 
             // Return all entries so frontend table refreshes immediately.
-            const sql = `SELECT * FROM categories`
+            const sql = `SELECT id, name FROM categories`
             conn.query(sql, (error, results) => {
                 if (error) return response.sendStatus(500)
                 return response.send( { entries: results })
@@ -55,7 +55,7 @@ module.exports = {
             if (error) return response.sendStatus(500)
 
             // Return all entries so frontend sees the delete right away.
-            const sql = `SELECT * FROM categories`
+            const sql = `SELECT id, name FROM categories`
             conn.query(sql, (error, results) => {
                 if (error) return response.sendStatus(500)
                 return response.send( { entries: results })

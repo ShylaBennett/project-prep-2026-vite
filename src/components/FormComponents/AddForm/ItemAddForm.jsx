@@ -102,6 +102,7 @@ const ItemAddForm = props => {
                    onChange = { e => _detectValueChanged('sku', e.target.value) } />
             <select value={category_id} onChange={ e => _detectValueChanged('category_id', e.target.value) }
                 >
+                    {/* add dropdown */}
                 <option value="">Select a category</option>
                 {props.categories.map(category => (
                     <option key={category.id} value={category.id}>
@@ -114,3 +115,12 @@ const ItemAddForm = props => {
 }
 
 export default ItemAddForm
+
+//Notes:
+// The item form had to only enable the Add button when every field was filled in. The fix was to check all required fields together with a simple true/false condition.
+// The item form needed to keep its inputs and saved data in sync. The fix was to store each input in state, then combine them into one object before sending it back to the parent.
+// The category dropdown needed real database data instead of hardcoded options. The fix was to pass the categories array into the form and map over it to build the options.
+// The app needed categories and items to stay separate. The fix was to give each one its own add, edit, update, and delete handlers.
+// JSX conditional rendering needed the correct ternary structure. The fix was to keep the condition, the true result, and the false result in the right order inside one JSX expression.
+// Missing imports or missing component files could break the app at runtime. The fix was to make sure every component used in App.jsx is both imported and actually exists.
+// Field names needed to stay consistent across frontend and backend. The fix was to use matching names like category_id and title so the data flows cleanly.

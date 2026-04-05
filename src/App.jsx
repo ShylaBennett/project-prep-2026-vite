@@ -1,223 +1,30 @@
 import { useEffect, useState } from 'react'
-// axios is used to send HTTP requests to the Node/Express server.
-import axios from 'axios';
+
 import './App.scss'
-import Table from './components/TableComponents/Table/Table.jsx';
-import CategoryAddForm from './components/FormComponents/AddForm/CategoryAddForm.jsx';
-import CategoryEditForm from './components/FormComponents/EditForm/CategoryEditForm.jsx';
-import ItemAddForm from './components/FormComponents/AddForm/ItemAddForm.jsx';
+
+import Items from './components/Pages/items.jsx';
+import Categories from './components/Pages/categories.jsx';
+
 
 const App = props => {
 
-  // categories: array shown in the table.
-  const [categories, setCategories] = useState([]);
-    const [items, setItems] = useState([]);
-  // editing: controls whether AddForm or EditForm is displayed.
-  const [editing, setEditing] = useState(false);
-  const [editingItems, setEditingItems] = useState(false);
-  // selectedEntry: row currently being edited.
-  const [selectedEntry, setSelectedEntry] = useState({})
-    const [selectedItem, setSelectedItem] = useState({})
 
-  // Runs once when App first loads to fetch initial data.
   useEffect(()=>{
     console.log(`App component has loaded`)
-
-    // Retrieve all entries from backend and store in state.
-
-    const url = "http://127.0.0.1:3001/categories"
-    axios.get(url)
-         .then( response => {
-            console.log(response) //{"entries":[]}
-            // Update state the React way (never assign directly to entries).
-            setCategories(response.data.entries)
-
-         })
-         .catch( error => {
-            console.log(error);
-        })
-
-
-
-            const itemsUrl = "http://127.0.0.1:3001/items"
-    axios.get(itemsUrl)
-         .then( response => {
-            console.log(response) //{"entries":[]}
-            // Update state the React way (never assign directly to entries).
-            setItems(response.data.entries)
-
-         })
-         .catch( error => {
-            console.log(error);
-        })
-
-
-
   },[])
-
-  // Called by CategoryAddForm when user submits a new entry.
-  const _addEntry = entry => {
-
-    // Send to backend, then backend returns updated full list.
-
-    const url = "http://127.0.0.1:3001/categories"
-    axios.post(url, { 
-      item : entry
-    })
-    .then( response => {
-      setCategories(response.data.entries)
-    })
-    .catch( error => {
-          console.log(error);
-      })
-
-  }
-
-
-
-  // Called by AddForm when user submits a new entry.
-  const _addItems = entry => {
-    // Send to backend, then backend returns updated full list.
-    const url = "http://127.0.0.1:3001/items"
-    axios.post(url, { 
-      item : entry
-    })
-    .then( response => {
-      setItems(response.data.entries)
-    })
-    .catch( error => {
-          console.log(error);
-      })
-
-  }
-
-  
-
-  
-
-  // Called when user clicks Edit on a row.
-  const _editEntry = entry => {
-    console.log(`_editEntry fired`)
-    console.log(entry)
-
-    // Switch UI to EditForm and pass selected row data into it.
-    setEditing(true)
-    setSelectedEntry(entry)
-  }
-
-    // Called when user clicks Edit on a row.
-  const _editItems = entry => {
-    console.log(`_editItems fired`)
-    console.log(entry)
-
-    // Switch UI to EditForm and pass selected row data into it.
-    setEditingItems(true)
-    setSelectedItem(entry)
-  }
-
-  const _updateItems = entry => {
-    console.log(`_updateItems fired`)
-   console.log(entry)
-
-    // PATCH updates one record by id.
-    const url = `http://127.0.0.1:3001/items/${entry.id}`
-    axios.patch(url, {
-      item: entry
-    }).then( response => {
-      // Refresh table data and switch back to AddForm mode.
-      setItems(response.data.entries)
-      setEditingItems(false)
-      setSelectedItem({})
-    }).catch( error => {
-        console.log(error);
-    })
-
-  }
-
-  // Called by EditForm after user submits changes.
-  const _updateEntry = entry => {
-    console.log(`_updateEntry fired`)
-   console.log(entry)
-
-    // PATCH updates one record by id.
-    const url = `http://127.0.0.1:3001/categories/${entry.id}`
-    axios.patch(url, {
-      item: entry
-    }).then( response => {
-      // Refresh table data and switch back to AddForm mode.
-      setCategories(response.data.entries)
-      setEditing(false)
-      setSelectedEntry({})
-    }).catch( error => {
-        console.log(error);
-    })
-
-  }
-
-  // Called when user clicks Delete on a row.
-  const _deleteEntry = entry => {
-    console.log(`_deleteEntry fired`)
-    console.log(entry)
-
-    // DELETE removes one record by id, then backend returns updated list.
-    const url = `http://127.0.0.1:3001/categories/${entry.id}`
-    axios.delete(url).then( response => {
-      setCategories(response.data.entries)
-    }).catch( error => {
-        console.log(error);
-    })
-
-
-    
-  }
-
-  const _deleteItems = entry => {
-    console.log(`_deleteItems fired`)
-    console.log(entry)
-
-    // DELETE removes one record by id, then backend returns updated list.
-    const url = `http://127.0.0.1:3001/items/${entry.id}`
-    axios.delete(url).then( response => {
-      setItems(response.data.entries)
-    }).catch( error => {
-        console.log(error);
-    })
-
-
-    
-  }
 
   return(
     <div className='App'>
-      {
-        // Conditionally render form based on editing mode.
-        editing ? (
-          <CategoryEditForm onUpdateEntry={ _updateEntry } entry={ selectedEntry } />
-        ) : (
-          <CategoryAddForm onAddEntry={ _addEntry } />
+        <Categories />
+        <Items />
 
-        )
-      }
-      
-      <Table entries={categories} onEditEntry={ _editEntry } onDeleteEntry={ _deleteEntry } />
-
-
-<div className='items'>
-  {
-        editingItems ? (
-          <ItemEditForm onUpdateEntry={ _updateItems } entry={ selectedItem } categories={ categories } />
-        ) : (
-          <ItemAddForm onAddEntry={ _addItems } categories={ categories } />
-        )
-      }
-      
-      
-      <Table entries={items} onEditEntry={ _editItems } onDeleteEntry={ _deleteItems } />
       </div>
-    </div>
+      
+
   )
 
 }
+
 
 export default App;
 
