@@ -14,9 +14,9 @@ module.exports = {
     },
     // POST: insert a new entry, then return the full updated list.
     store(request, response) {
-        const sql = `INSERT INTO items (value1, value2, value3) VALUES (?, ?, ?)`
+        const sql = `INSERT INTO items (category_id, title, description, price, quantity, sku) VALUES (?, ?, ?, ?, ?, ?)`
         // Placeholder values come from the request body.
-        const values = [request.body.item.value1, request.body.item.value2, request.body.item.value3]
+        const values = [request.body.item.category_id, request.body.item.title, request.body.item.description, request.body.item.price, request.body.item.quantity, request.body.item.sku]
         conn.query(sql, values, (error, results) => {
             console.log(`results: ${ JSON.stringify(results) }`)
             if (error) return response.sendStatus(500)
@@ -31,8 +31,8 @@ module.exports = {
     },
     // PATCH: update an existing entry by id, then return full updated list.
     update(request, response){
-        const sql = `UPDATE items SET value1=?, value2=?, value3=? WHERE id=?`
-        const values = [request.body.item.value1, request.body.item.value2, request.body.item.value3, request.body.item.id]
+        const sql = `UPDATE items SET category_id = ?, title=?, description=?, price=?, quantity=?, sku=? WHERE id=?`
+        const values = [request.body.item.category_id, request.body.item.title, request.body.item.description, request.body.item.price, request.body.item.quantity, request.body.item.sku, request.body.item.id]
         conn.query(sql, values, (error, results) => {
             console.log(`results: ${ JSON.stringify(results) }`)
             if (error) return response.sendStatus(500)
@@ -49,7 +49,7 @@ module.exports = {
     destroy(request, response){
         const sql = `DELETE FROM items WHERE id=?`
         // Value comes from URL parameter (for example, /items/3).
-        const values = [request.params.entry]
+        const values = [request.params.item]
         conn.query(sql, values, (error, results) => {
             console.log(`results: ${ JSON.stringify(results) }`)
             if (error) return response.sendStatus(500)
