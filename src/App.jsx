@@ -4,6 +4,8 @@ import './App.scss'
 
 import Items from './components/Pages/items.jsx';
 import Categories from './components/Pages/categories.jsx';
+import Storefront from './components/Pages/storefront.jsx';
+import { Link, Route, Routes,Navigate } from 'react-router-dom'
 
 
 const App = props => {
@@ -15,11 +17,19 @@ const App = props => {
 
   return(
     <div className='App'>
-        <Categories />
-        <Items />
-
-      </div>
-      
+      <nav>
+        <Link to="/items">Items</Link>
+        <Link to="/categories">Categories</Link>
+        <Link to="/storefront">Storefront</Link>
+      </nav>
+      <Routes>
+        <Route path="/items" element={<Items />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/storefront" element={<Storefront />} />
+        <Route path="/" element={<Navigate to="/storefront" />} />
+      </Routes>
+    </div>
+    
 
   )
 
