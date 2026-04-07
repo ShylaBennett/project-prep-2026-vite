@@ -56,11 +56,11 @@ const CategoryAddForm = props => {
 
     return(
         <div className='Form'>
-            <Button clickme={ _add } title='Add Category' enabled={ buttonState }/>
-            <br/>
             <label>Category:</label>
             <input type='text' placeholder='Category' value={category_name}
                    onChange = { e => _detectValueChanged('category_name', e.target.value) } />
+                               <br/>
+                               <Button clickme={ _add } title='Add Category' enabled={ buttonState }/>
         </div>
     )
 }

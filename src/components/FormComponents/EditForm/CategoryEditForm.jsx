@@ -74,13 +74,12 @@ const CategoryEditForm = props => {
 
     return(
         <div className='CategoryEditForm'>
-            {/* Reusable button component; enabled only when values are valid. */}
-            <Button clickme={ _update } title='Edit Category' enabled={ buttonState }/>
-            <br/>
+    
             <label>Category: </label>
             <input type='text' placeholder='Category Name' value={category_name}
                    onChange = { e => _detectValueChanged('category_name', e.target.value) } />
             <br/>
+            <Button clickme={ _update } title='Edit Category' enabled={ buttonState }/>
            
         </div>
     )

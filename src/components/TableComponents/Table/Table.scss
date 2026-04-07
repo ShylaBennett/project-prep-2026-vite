@@ -1,0 +1,20 @@
+.Table-Component {
+	width: 100%;
+	max-width: 100%;
+	overflow-x: auto;
+	padding: 0;
+
+}
+
+.Table-Component table {
+	width: 100%;
+	table-layout: auto;
+}
+
+.Table-Component th,
+.Table-Component td {
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--border);
+	text-align: left;
+
+}
