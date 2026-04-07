@@ -3,6 +3,19 @@ import TableRow from "../TableRow/TableRow.jsx"
 
 const Table = props => {
 
+    const entries = props.entries || []
+
+    // Derive table columns from data so the same table works for categories and items.
+    const columns = entries.length > 0
+        ? Object.keys(entries[0]).filter(key => key !== 'id')
+        : []
+
+    const _formatHeader = key => {
+        return key
+            .replaceAll('_', ' ')
+            .replace(/\b\w/g, char => char.toUpperCase())
+    }
+
     // Forward edit event from row back up to App.
     const _editEntry = entry => {
         props.onEditEntry(entry)
@@ -19,16 +32,16 @@ const Table = props => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Value 1</th>
-                        <th>Value 2</th>
-                        <th>Value 3</th>
+                        {columns.map(column => (
+                            <th key={column}>{_formatHeader(column)}</th>
+                        ))}
                         <th colSpan={2}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {/* Build one row component per entry object in the array. */}
-                    { props.entries.map(
-                        (entry, i) => { return( <TableRow key={i} index={i} entry={entry} onEditEntry={_editEntry} onDeleteEntry={_deleteEntry} /> ) }
+                    { entries.map(
+                        (entry, i) => { return( <TableRow key={i} index={i} entry={entry} columns={columns} onEditEntry={_editEntry} onDeleteEntry={_deleteEntry} /> ) }
                     )}
                 </tbody>
             </table> 

@@ -17,7 +17,7 @@ const App = props => {
 
   return(
     <div className='App'>
-      <nav>
+      <nav className='nav'>
         <Link to="/items">Items</Link>
         <Link to="/categories">Categories</Link>
         <Link to="/storefront">Storefront</Link>

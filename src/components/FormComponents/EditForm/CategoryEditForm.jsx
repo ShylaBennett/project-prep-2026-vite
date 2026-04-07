@@ -55,7 +55,7 @@ const CategoryEditForm = props => {
     // Build the entry payload object from current field values.
     useEffect(() => {
         setEntry({ 'id': id, 'category_name': category_name }) 
-    },[category_name])
+    },[id, category_name])
 
     // Handle changes from all 3 inputs in one place.
     const _detectValueChanged = (key, value) => {
@@ -67,16 +67,17 @@ const CategoryEditForm = props => {
 
     // When selected row changes, preload form fields with that row's values.
     useEffect(() => {
+        if (!props.entry) return
         setID(props.entry.id)
-        setCategoryName(props.entry.category_name)
-    },[props])//[] should be fine, [props] guarantees values received
+        setCategoryName(props.entry.name ?? props.entry.category_name ?? '')
+    },[props.entry])
 
     return(
         <div className='CategoryEditForm'>
             {/* Reusable button component; enabled only when values are valid. */}
             <Button clickme={ _update } title='Edit Category' enabled={ buttonState }/>
             <br/>
-            <label>Category Name:</label>
+            <label>Category: </label>
             <input type='text' placeholder='Category Name' value={category_name}
                    onChange = { e => _detectValueChanged('category_name', e.target.value) } />
             <br/>

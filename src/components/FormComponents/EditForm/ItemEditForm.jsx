@@ -83,7 +83,7 @@ const ItemEditForm = props => {
         console.log('_detectValueChanged triggered')
     }
 
-    // When selected row changes, preload form fields with that row's values.
+
     useEffect(() => {
         setID(props.entry.category_id)
         setTitle(props.entry.title)
@@ -91,29 +91,30 @@ const ItemEditForm = props => {
         setPrice(props.entry.price)
         setQuantity(props.entry.quantity)
         setSku(props.entry.sku)
-    },[props])//[] should be fine, [props] guarantees values received
+    },[props])
 
     return(
         <div className='CategoryEditForm'>
             {/* Reusable button component; enabled only when values are valid. */}
-            <Button clickme={ _update } title='Edit Item' enabled={ buttonState }/>
+
+
+            <label>Edit Item:</label>
             <br/>
-            <label>Item Name:</label>
             <input type='text' placeholder='Item Name' value={title}
                    onChange = { e => _detectValueChanged('title', e.target.value) } />
-                   <label>Description:</label>
+                   <br />
             <input type='text' placeholder='Description' value={description}
                    onChange = { e => _detectValueChanged('description', e.target.value) } />
-                     <label>Price:</label>
+                     <br/>
             <input type='text' placeholder='Price' value={price}
                      onChange = { e => _detectValueChanged('price', e.target.value) } />
-                        <label>Quantity:</label>
+                        <br/>
             <input type='text' placeholder='Quantity' value={quantity}
                      onChange = { e => _detectValueChanged('quantity', e.target.value) } />
-                        <label>SKU:</label>
+                        <br/>
             <input type='text' placeholder='SKU' value={sku}
                      onChange = { e => _detectValueChanged('sku', e.target.value) } />
-                        <label>Category:</label>
+                        <br/>
                         {/* dropdown for edit category */}
                 <select value={category_id} onChange={e => _detectValueChanged('category_id', e.target.value)}>
                     <option value="">Select a category</option>
@@ -121,8 +122,13 @@ const ItemEditForm = props => {
                         <option key={category.id} value={category.id}>
                             {category.name}
                         </option>
+                        
                     ))}
+                    <br/>
+                    
                 </select>
+                <br/>
+                <Button clickme={ _update } title='Edit Item' enabled={ buttonState }/>
             <br/>
            
         </div>

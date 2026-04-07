@@ -16,6 +16,18 @@
     outline-offset: 2px;
   }
 }
+.nav {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+
+  a {
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+}
 
 .hero {
   position: relative;

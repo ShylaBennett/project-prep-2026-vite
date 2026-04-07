@@ -87,19 +87,23 @@ const ItemAddForm = props => {
 
     return(
         <div className='Form'>
-            <Button clickme={ _add } title='Add Item' enabled={ buttonState }/>
-            <br/>
             <label>Items:</label>
+            <br />
             <input type='text' placeholder='Item Name' value={title}
                    onChange = { e => _detectValueChanged('title', e.target.value) } />
+                   <br/>
             <input type='text' placeholder='Description' value={description}
                    onChange = { e => _detectValueChanged('description', e.target.value) } />
+            <br/>
             <input type='text' placeholder='Price' value={price}
                    onChange = { e => _detectValueChanged('price', e.target.value) } />
+            <br/>
             <input type='text' placeholder='Quantity' value={quantity}
                    onChange = { e => _detectValueChanged('quantity', e.target.value) } />
+            <br/>
             <input type='text' placeholder='SKU' value={sku}
                    onChange = { e => _detectValueChanged('sku', e.target.value) } />
+            <br/>
             <select value={category_id} onChange={ e => _detectValueChanged('category_id', e.target.value) }
                 >
                     {/* add dropdown */}
@@ -110,6 +114,8 @@ const ItemAddForm = props => {
                     </option>
                 ))}
             </select>
+                <br/>
+            <Button clickme={ _add } title='Add Item' enabled={ buttonState }/>
         </div>
     )
 }

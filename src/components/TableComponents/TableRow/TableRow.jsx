@@ -14,10 +14,13 @@ const TableRow = props => {
 
     return(
         <tr>
+            {/* Always show the primary id first. */}
             <td>{props.entry.id}</td>
-            <td>{props.entry.value1}</td>
-            <td>{props.entry.value2}</td>
-            <td>{props.entry.value3 }</td>
+            {/* Build one cell per column name passed from the Table component. */}
+            {props.columns.map(column => (
+                <td key={column}>{props.entry[column]}</td>
+            ))}
+            {/*action buttons call parent with this row's data*/}
             <td><button onClick={ _editRowEntry }>Edit</button></td>
             <td><button onClick={ _deleteRowEntry }>Delete</button></td>
         </tr>
