@@ -3,30 +3,19 @@ import Button from '../Button/Button.jsx'
 import { useState, useEffect } from 'react'
 
 const ItemAddForm = props => {
-
-    // State values that mirror each input field.
     const [category_id, setCategoryId] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
     const [quantity, setQuantity] = useState('')
     const [sku, setSku] = useState('')
-    
-
-
-    // Combined object sent back to App when user clicks Add Entry.
     const [entry, setEntry] = useState({})
 
-    // Controls if Add button is enabled.
     const [buttonState, setButtonState] = useState(false)
-
-    // Call parent function and then clear the form.
     const _add = () => {
         props.onAddEntry(entry)
         _clear()
     }
-
-    // Reset all input fields.
     const _clear = () => {
         setCategoryId('')
         setTitle('')
@@ -36,19 +25,9 @@ const ItemAddForm = props => {
         setSku('')
     }
 
-    // Enable button only when all fields have values.
     useEffect(() => {
         console.log('entry changed')
         console.log(`entry: ${JSON.stringify(entry)}`)
-
-        /*
-        if (entry.value1 === '' || entry.value2 === "" || entry.value3 === '') {
-            setButtonState(false)
-        } else {
-            setButtonState(true)
-        }
-        */
-
 
         setButtonState(
             entry.category_id !== '' &&
@@ -61,14 +40,13 @@ const ItemAddForm = props => {
 
     },[entry])
 
-    // Keep the entry object in sync whenever any input changes.
+
     useEffect(() => {
         setEntry({'category_id' : category_id, 'title' : title, 'description' : description, 'price' : price, 'quantity' : quantity, 'sku' : sku })
 
     },[category_id, title, description, price, quantity, sku])
 
 
-    // Handle input changes using one helper function.
     const _detectValueChanged = (key, value) => {
         if (key === 'category_id') {
             setCategoryId(value)
@@ -121,12 +99,3 @@ const ItemAddForm = props => {
 }
 
 export default ItemAddForm
-
-//Notes:
-// The item form had to only enable the Add button when every field was filled in. The fix was to check all required fields together with a simple true/false condition.
-// The item form needed to keep its inputs and saved data in sync. The fix was to store each input in state, then combine them into one object before sending it back to the parent.
-// The category dropdown needed real database data instead of hardcoded options. The fix was to pass the categories array into the form and map over it to build the options.
-// The app needed categories and items to stay separate. The fix was to give each one its own add, edit, update, and delete handlers.
-// JSX conditional rendering needed the correct ternary structure. The fix was to keep the condition, the true result, and the false result in the right order inside one JSX expression.
-// Missing imports or missing component files could break the app at runtime. The fix was to make sure every component used in App.jsx is both imported and actually exists.
-// Field names needed to stay consistent across frontend and backend. The fix was to use matching names like category_id and title so the data flows cleanly.
